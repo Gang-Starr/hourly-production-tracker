@@ -4,14 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hourly Production Tracker</title>
+  <script>
+    (function(){
+      try {
+        var lang = localStorage.getItem('hpt.lang.v1') || 'en';
+        document.documentElement.lang = lang;
+        document.documentElement.classList.add('pre-i18n');
+        var titles = { en: 'Hourly Production Tracker', de: 'Stündlicher Produktionstracker', it: 'Monitor produzione oraria' };
+        document.title = titles[lang] || titles.en;
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="app-header">
     <div><p class="eyebrow" data-i18n="prototype">Prototype</p><h1 data-i18n="appTitle">Hourly Production Tracker</h1></div>
     <div class="header-actions">
-      <select id="languageSelect" aria-label="Language"><option value="en">English</option><option value="de">Deutsch</option><option value="it">Italiano</option></select>
-      <button class="icon-button" id="infoButton" aria-label="Information">i</button>
+      <select id="languageSelect" data-i18n-aria="language" aria-label="Language"><option value="en">English</option><option value="de">Deutsch</option><option value="it">Italiano</option></select>
+      <button class="icon-button" id="infoButton" data-i18n-aria="information" aria-label="Information">i</button>
     </div>
   </header>
 
@@ -69,8 +80,8 @@
     <section class="card"><h2 data-i18n="dataFunctions">Data functions</h2><div class="button-row"><button id="exportCsv" class="secondary" data-i18n="exportCsv">Export CSV</button><button id="exportJson" class="secondary" data-i18n="backupJson">JSON backup</button><label class="file-button"><span data-i18n="restoreJson">JSON restore</span><input id="importJson" type="file" accept="application/json"></label><button id="deleteAll" class="danger" data-i18n="deleteAll">Delete all production data</button></div></section>
   </main>
 
-  <dialog id="infoDialog"><div class="modal-card"><button id="closeInfo" class="icon-button modal-close">×</button><h2 data-i18n="infoTitle">Information</h2><p data-i18n="infoText"></p></div></dialog>
-  <footer>Prototype by JSE</footer>
+  <dialog id="infoDialog"><div class="modal-card"><button id="closeInfo" class="icon-button modal-close" data-i18n-aria="close" aria-label="Close">×</button><h2 data-i18n="infoTitle">Information</h2><p data-i18n="infoText"></p></div></dialog>
+  <footer data-i18n="footer">Prototype by JSE</footer>
   <script src="app.js"></script>
 </body>
 </html>

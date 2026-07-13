@@ -3,12 +3,19 @@
 .pre-i18n body{visibility:hidden}
 html,body{width:100%;max-width:100%}
 body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef4ff 0,#f8fafc 280px);color:var(--text)}
-.app-header{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;width:100%;min-width:0;padding:1.4rem clamp(1rem,4vw,3rem);background:#0f2544;color:#fff;box-shadow:var(--shadow)}
-.app-header>div:first-child{min-width:0;max-width:100%}
+.app-header{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,340px);align-items:start;gap:clamp(1.25rem,4vw,3rem);width:100%;min-width:0;padding:clamp(1.8rem,4vw,3.4rem) clamp(1rem,5vw,4.5rem);background:linear-gradient(105deg,#082b55 0%,#0f4f96 58%,#1684d8 100%);color:#fff;box-shadow:0 18px 45px rgba(15,37,68,.24);border-bottom:1px solid rgba(255,255,255,.22)}
+.header-copy{min-width:0;max-width:920px}
 h1,h2,h3,p{margin-top:0;overflow-wrap:anywhere}
-h1{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:0}
-.eyebrow{text-transform:uppercase;letter-spacing:.12em;color:#b8d5ff;font-size:.78rem;margin-bottom:.25rem}
-.header-actions,.button-row{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;min-width:0;max-width:100%}
+h1{font-size:clamp(2.25rem,5vw,4.6rem);line-height:1.02;margin-bottom:.7rem;letter-spacing:-.045em;color:#fff}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.78);font-size:clamp(.72rem,1.2vw,.88rem);font-weight:800;margin-bottom:.55rem}
+.header-subtitle{max-width:780px;margin-bottom:1rem;color:rgba(255,255,255,.94);font-size:clamp(1rem,1.7vw,1.28rem);line-height:1.45}
+.header-pill{display:inline-flex;max-width:100%;margin:0;padding:.62rem .9rem;border-radius:999px;background:rgba(255,255,255,.96);color:#0f3c71;font-weight:800;line-height:1.35;box-shadow:0 10px 25px rgba(8,43,85,.16)}
+.header-actions{display:flex;flex-direction:column;gap:.9rem;align-items:stretch;justify-self:end;width:min(100%,340px);min-width:0;max-width:100%}
+.button-row{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;min-width:0;max-width:100%}
+.header-info-button{width:100%;border:1px solid rgba(255,255,255,.75);border-radius:999px;background:rgba(255,255,255,.96);color:#0f3c71;box-shadow:0 12px 30px rgba(8,43,85,.18);padding:.78rem 1.05rem;text-align:center}
+.language-control{display:grid;gap:.45rem;width:100%;padding:.8rem;border:1px solid rgba(255,255,255,.55);border-radius:18px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:#fff;font-weight:800}
+.language-control span{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.78)}
+.language-control select{border-color:rgba(255,255,255,.7)}
 select,input,textarea,button,.file-button{font:inherit;max-width:100%;min-width:0;border-radius:12px;border:1px solid var(--line);padding:.62rem .75rem;background:#fff;color:var(--text)}
 select,input,textarea{width:100%;box-sizing:border-box}
 button,.file-button{cursor:pointer;font-weight:700;transition:.15s}
@@ -70,9 +77,9 @@ footer{text-align:center;color:var(--muted);padding:2rem clamp(.85rem,3vw,2rem);
 .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
-@media(max-width:640px){.app-header,.hero-card,.section-heading{align-items:stretch;flex-direction:column}
-.header-actions{width:100%;justify-content:space-between}
-.header-actions select{flex:1 1 auto;width:auto;min-width:0}
+@media(max-width:900px){.app-header{grid-template-columns:1fr}.header-actions{width:100%;justify-self:stretch}.header-actions select{width:100%;min-width:0}}
+
+@media(max-width:640px){.hero-card,.section-heading{align-items:stretch;flex-direction:column}
 .button-row{width:100%}
 .button-row>*{flex:1 1 100%}
 .form-grid{grid-template-columns:1fr}
@@ -81,4 +88,4 @@ footer{text-align:center;color:var(--muted);padding:2rem clamp(.85rem,3vw,2rem);
 table{min-width:900px}
 }
 
-@media(max-width:420px){.page-shell{padding-inline:.65rem}.app-header{padding-inline:.85rem}.icon-button{width:40px;height:40px;min-width:40px}.summary-grid,.calculation-strip{grid-template-columns:1fr}}
+@media(max-width:420px){.page-shell{padding-inline:.65rem}.app-header{padding-inline:.85rem}.header-pill{border-radius:18px}.icon-button{width:40px;height:40px;min-width:40px}.summary-grid,.calculation-strip{grid-template-columns:1fr}}

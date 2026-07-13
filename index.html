@@ -10,7 +10,7 @@
         var lang = localStorage.getItem('hpt.lang.v1') || 'en';
         document.documentElement.lang = lang;
         document.documentElement.classList.add('pre-i18n');
-        var titles = { en: 'Hourly Production Tracker', de: 'Stündlicher Produktionstracker', it: 'Monitor produzione oraria' };
+        var titles = { en: 'Hourly Production Tracker', de: 'Stündlicher Produktionstracker', it: 'Tracker Orario della Produzione' };
         document.title = titles[lang] || titles.en;
       } catch (e) {}
     })();
@@ -19,10 +19,15 @@
 </head>
 <body>
   <header class="app-header">
-    <div><p class="eyebrow" data-i18n="prototype">Prototype</p><h1 data-i18n="appTitle">Hourly Production Tracker</h1></div>
+    <div class="header-copy">
+      <p class="eyebrow" data-i18n="headerEyebrow">HOURLY PRODUCTION MONITORING TOOL</p>
+      <h1 data-i18n="appTitle">Hourly Production Tracker</h1>
+      <p class="header-subtitle" data-i18n="headerSubtitle">Record hourly production data, identify losses and make deviations transparent.</p>
+      <p class="header-pill" data-i18n="headerNotice">Open test application – only enter approved production data. Do not enter personal data.</p>
+    </div>
     <div class="header-actions">
-      <select id="languageSelect" data-i18n-aria="language" aria-label="Language"><option value="en">English</option><option value="de">Deutsch</option><option value="it">Italiano</option></select>
-      <button class="icon-button" id="infoButton" data-i18n-aria="information" aria-label="Information">i</button>
+      <button class="header-info-button" id="infoButton" data-i18n="infoInstructions" data-i18n-aria="information" aria-label="Info / Instructions">ⓘ Info / Instructions</button>
+      <label class="language-control" for="languageSelect"><span data-i18n="language">Language</span><select id="languageSelect" data-i18n-aria="language" aria-label="Language"><option value="en">English</option><option value="de">Deutsch</option><option value="it">Italiano</option></select></label>
     </div>
   </header>
 

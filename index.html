@@ -47,7 +47,7 @@
     <section class="grid two-columns">
       <form id="entryForm" class="card form-card">
         <div class="section-heading"><h2 data-i18n="entryTitle">Hourly entry</h2><span id="formMode" data-i18n="newEntry">New entry</span></div>
-        <h3 data-i18n="generalInfo">General information</h3>
+        <h3 class="form-section-title" data-i18n="generalInfo">General information</h3>
         <div class="form-grid">
           <label><span data-i18n="date">Date</span><input id="date" type="date" required></label>
           <label><span data-i18n="shift">Shift</span><select id="shift" required></select></label>
@@ -56,7 +56,7 @@
           <label><span data-i18n="product">Product</span><select id="product" required></select></label>
           <label><span data-i18n="machine">Machine or production line</span><select id="machine" required></select></label>
         </div>
-        <h3 data-i18n="hourlyInfo">Hourly production information</h3>
+        <h3 class="form-section-title" data-i18n="hourlyInfo">Hourly production information</h3>
         <div class="form-grid">
           <label><span data-i18n="timeSlot">Time slot</span><select id="timeSlot" required></select></label>
           <label id="customSlotWrap" class="hidden"><span data-i18n="customTimeSlot">Custom time slot</span><input id="customTimeSlot" placeholder="06:30–07:30"></label>
@@ -66,7 +66,7 @@
           <label><span data-i18n="downtime">Downtime in minutes</span><input id="downtime" type="number" min="0" max="60" step="1" value="0" required></label>
         </div>
         <div class="calculation-strip" id="calcStrip"></div>
-        <h3 data-i18n="lossAnalysis">Loss analysis</h3>
+        <h3 class="form-section-title" data-i18n="lossAnalysis">Loss analysis</h3>
         <div class="form-grid">
           <label><span data-i18n="lossCategory">Main loss category</span><select id="lossCategory"></select></label>
           <label><span data-i18n="lossReason">Detailed loss reason</span><select id="lossReason"></select></label>

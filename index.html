@@ -112,7 +112,16 @@
     <section class="card"><h2 data-i18n="dataFunctions">Data functions</h2><div class="button-row data-functions-row"><button id="exportCsv" class="secondary" data-i18n="exportCsv" data-i18n-title="exportCsvHelp" data-i18n-aria="exportCsvHelp" title="Download production data as a CSV file. The file can be opened with applications such as Excel." aria-label="Download production data as a CSV file. The file can be opened with applications such as Excel.">Export production data</button><button id="exportJson" class="secondary" data-i18n="backupJson" data-i18n-title="backupJsonHelp" data-i18n-aria="backupJsonHelp" title="Create a complete backup of production entries, master data and application settings." aria-label="Create a complete backup of production entries, master data and application settings.">Create data backup</button><label class="file-button" data-i18n-title="restoreJsonHelp" data-i18n-aria="restoreJsonHelp" title="Select a previously created data backup and restore it in the application." aria-label="Select a previously created data backup and restore it in the application."><span data-i18n="restoreJson">Restore data backup</span><input id="importJson" type="file" accept="application/json"></label><button id="deleteAll" class="danger" data-i18n="deleteAll" data-i18n-title="deleteAllHelp" data-i18n-aria="deleteAllHelp" title="Delete all saved production entries. Master data remains unchanged." aria-label="Delete all saved production entries. Master data remains unchanged.">Delete all production entries</button></div></section>
   </main>
 
-  <dialog id="infoDialog"><div class="modal-card"><button id="closeInfo" class="icon-button modal-close" data-i18n-aria="close" aria-label="Close">×</button><h2 data-i18n="infoTitle">Information</h2><p data-i18n="infoText"></p></div></dialog>
+  <dialog id="infoDialog" class="info-dialog" aria-modal="true" aria-labelledby="infoDialogTitle">
+    <div class="info-modal-card">
+      <header class="info-modal-header">
+        <h2 id="infoDialogTitle" data-i18n="infoTitle">Information &amp; instructions</h2>
+        <button id="closeInfo" class="icon-button modal-close" data-i18n-aria="close" aria-label="Close" type="button">×</button>
+      </header>
+      <div id="infoContent" class="info-content"></div>
+      <footer class="info-modal-footer"><button id="closeInfoFooter" class="primary" type="button" data-i18n="close">Close</button></footer>
+    </div>
+  </dialog>
   <footer data-i18n="footer">Prototype by JSE</footer>
   <script src="app.js"></script>
 </body>

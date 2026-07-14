@@ -31,6 +31,8 @@ button,.file-button{cursor:pointer;font-weight:700;transition:.15s}
 .grid,.two-columns,.form-card,.summary-card,.filters-card,details,summary{min-width:0;max-width:100%}
 .two-columns{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1.2rem;align-items:start;width:100%}
 .two-columns>*{min-width:0;max-width:100%}
+.form-section-title{margin:1.4rem 0 .75rem}
+.section-heading+.form-section-title{margin-top:.9rem}
 .form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem;min-width:0;max-width:100%}
 .form-grid label{min-width:0;max-width:100%;display:grid;gap:.35rem;color:var(--muted);font-size:.9rem}
 .form-grid input,.form-grid select,.form-grid textarea,.master-row input{width:100%;max-width:100%;min-width:0;box-sizing:border-box;color:var(--text)}

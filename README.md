@@ -11,7 +11,7 @@ Hourly Production Tracker is a standalone browser-based prototype for recording 
 - Editable overview table with filtering, sorting by date and time slot, edit and delete functions.
 - Shift summary with totals, downtime, periods below target and main loss information.
 - Collapsible chart area for hourly, cumulative, Pareto and downtime views.
-- Editable master data for projects, products, machines, shifts and detailed loss reasons.
+- Editable master data for projects, products, machines and detailed loss reasons. Shifts and teams are fixed system values used in entry forms, filters and exports.
 - CSV export, JSON backup, JSON restore, deletion of all production data and restoring default master data.
 
 ## Local data storage

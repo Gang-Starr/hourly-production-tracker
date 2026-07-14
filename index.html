@@ -26,7 +26,14 @@
       <p class="header-pill" data-i18n="headerNotice">Open test application – only enter approved production data. Do not enter personal data.</p>
     </div>
     <div class="header-actions">
-      <button class="header-info-button" id="infoButton" data-i18n="infoInstructions" data-i18n-aria="information" aria-label="Info / Instructions">ⓘ Info / Instructions</button>
+      <button class="header-info-button" id="infoButton" data-i18n-aria="information" aria-label="Info / Instructions">
+        <svg class="header-info-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <circle cx="10" cy="10" r="8" />
+          <path d="M10 9v5" />
+          <path d="M10 6h.01" />
+        </svg>
+        <span data-i18n="infoInstructions">Info &amp; Instructions</span>
+      </button>
       <label class="language-control" for="languageSelect"><span data-i18n="language">Language</span><select id="languageSelect" data-i18n-aria="language" aria-label="Language"><option value="en">English</option><option value="de">Deutsch</option><option value="it">Italiano</option></select></label>
     </div>
   </header>

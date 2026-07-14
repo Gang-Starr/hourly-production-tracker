@@ -57,6 +57,7 @@ th{background:#f0f5fb;position:sticky;top:0;z-index:1;color:var(--text);font-siz
 th:not(:last-child),td:not(:last-child){border-right:1px solid #edf2f7}
 th:nth-child(1),td:nth-child(1){min-width:104px}
 th:nth-child(2),td:nth-child(2){min-width:112px}
+th:nth-child(4),td:nth-child(4){min-width:96px;white-space:nowrap}
 th:nth-child(5),td:nth-child(5){min-width:118px}
 th:nth-child(6),td:nth-child(6),th:nth-child(7),td:nth-child(7){min-width:130px}
 th:nth-child(8),td:nth-child(8){min-width:178px}

@@ -61,6 +61,7 @@ tr:hover{background:#fbfdff}
 canvas{display:block;width:100%;max-width:100%;height:auto;background:#fbfdff;border:1px solid var(--line);border-radius:14px}
 .master-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));min-width:0;max-width:100%;gap:1rem}
 .master-box{min-width:0;max-width:100%;border:1px solid var(--line);border-radius:14px;padding:1rem;background:#fbfdff}
+.master-section-title{grid-column:1/-1;margin:.25rem 0 0;color:var(--text);font-size:1.15rem}
 .master-list{display:grid;gap:.45rem;margin:.7rem 0;min-width:0}
 .master-row{display:flex;gap:.4rem;min-width:0;max-width:100%;flex-wrap:wrap}
 .master-row span{align-self:center;color:var(--muted);font-size:.82rem;min-width:0}

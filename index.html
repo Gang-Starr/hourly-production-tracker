@@ -86,6 +86,25 @@
       <div class="table-wrap"><table id="overviewTable"><thead></thead><tbody></tbody></table></div>
     </section>
 
+
+    <section class="card management-card" id="managementSummaryCard">
+      <div class="management-header">
+        <h2 data-i18n="managementSummary">Management summary</h2>
+        <button id="copyManagementSummary" class="secondary management-copy" type="button" data-i18n-aria="copySummary" aria-label="Copy summary">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 8h10v12H8z"/><path d="M6 16H4V4h12v2"/></svg>
+          <span data-i18n="copySummary">Copy summary</span>
+        </button>
+      </div>
+      <div class="management-body">
+        <div class="management-text">
+          <p id="managementScope" class="management-scope"></p>
+          <p id="managementSummaryText" class="management-summary-text"></p>
+          <p id="managementCopyFeedback" class="management-feedback" aria-live="polite"></p>
+        </div>
+        <div id="managementStatus" class="status-pill management-status hidden"></div>
+      </div>
+    </section>
+
     <section class="card"><details open><summary><h2 data-i18n="charts">Charts</h2></summary><div class="charts-grid"><div class="chart-panel"><h3 data-i18n="chartHourly">Hourly target vs. good quantity</h3><canvas id="hourlyChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartCumulative">Cumulative target vs. cumulative good quantity</h3><canvas id="cumulativeChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartPareto">Pareto lost quantity by loss category</h3><canvas id="paretoChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartDowntime">Downtime by loss category</h3><canvas id="downtimeChart" height="180"></canvas></div></div></details></section>
 
     <section class="card"><details><summary><h2 data-i18n="masterData">Master data</h2></summary><div id="masterDataArea" class="master-grid"></div><div class="button-row"><button id="restoreMaster" class="danger" data-i18n="restoreDefaults">Restore default master data</button></div></details></section>

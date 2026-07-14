@@ -1,4 +1,4 @@
-:root{--bg:#f4f7fb;--card:#fff;--text:#2f3742;--text-secondary:#5b6573;--muted:var(--text-secondary);--line:#d9e2ec;--primary:#1f6feb;--primary-dark:#1758c2;--green:#1f9d55;--yellow:#f4b400;--red:#d93025;--shadow:0 10px 30px rgba(16,24,40,.08);--radius:18px}
+:root{--bg:#f4f7fb;--card:#fff;--text:#2f3742;--text-secondary:#5b6573;--muted:var(--text-secondary);--line:#d9e2ec;--primary:#1f6feb;--primary-dark:#1758c2;--green:#1f9d55;--success:#18794e;--yellow:#f4b400;--red:#d93025;--shadow:0 10px 30px rgba(16,24,40,.08);--radius:18px}
 *,*::before,*::after{box-sizing:border-box}
 .pre-i18n body{visibility:hidden}
 html,body{width:100%;max-width:100%}
@@ -45,7 +45,9 @@ button,.file-button{cursor:pointer;font-weight:700;transition:.15s}
 .status-green{background:var(--green)}
 .status-yellow{background:var(--yellow);color:#4a3500}
 .status-red{background:var(--red)}
-.validation{color:var(--red);font-weight:700;min-height:1.2rem}
+.validation{font-weight:600;min-height:1.2rem}
+.validation.success{color:var(--success)}
+.validation.error{color:var(--red);font-weight:700}
 .hidden{display:none!important}
 .table-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:auto;border:1px solid var(--line);border-radius:14px}
 table{border-collapse:collapse;width:100%;min-width:1100px;background:#fff}

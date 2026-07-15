@@ -113,13 +113,11 @@
   </main>
 
   <dialog id="infoDialog" class="info-dialog" aria-modal="true" aria-labelledby="infoDialogTitle">
-    <div class="info-modal-card">
-      <header class="info-modal-header">
-        <h2 id="infoDialogTitle" data-i18n="infoTitle">Information &amp; instructions</h2>
-        <button id="closeInfo" class="icon-button modal-close" data-i18n-aria="close" aria-label="Close" type="button">×</button>
-      </header>
-      <div id="infoContent" class="info-content"></div>
-      <footer class="info-modal-footer"><button id="closeInfoFooter" class="primary" type="button" data-i18n="close">Close</button></footer>
+    <div class="modal-card info-modal-card">
+      <h2 id="infoDialogTitle" data-i18n="infoTitle">Information &amp; instructions</h2>
+      <button id="closeInfo" class="icon-button modal-close" data-i18n-aria="close" aria-label="Close" type="button">×</button>
+      <p class="info-text" data-i18n="infoText">The Hourly Production Tracker supports the hourly recording and evaluation of production data.</p>
+      <div class="button-row info-dialog-actions"><button id="closeInfoFooter" class="primary" type="button" data-i18n="close">Close</button></div>
     </div>
   </dialog>
   <footer class="app-footer" data-i18n="footer">Hourly Production Tracker · Internal Prototype · Developed by JSE</footer>

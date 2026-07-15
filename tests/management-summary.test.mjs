@@ -12,8 +12,8 @@ const sandbox = {
   document: { documentElement: {}, addEventListener: () => {}, querySelectorAll: () => [], getElementById: () => ({}) },
   navigator: {},
 };
-vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText};this.__setLang=(value)=>{lang=value};`, sandbox);
-const { calc, managementMetrics, mText } = sandbox.__api;
+vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster};this.__setLang=(value)=>{lang=value};`, sandbox);
+const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster } = sandbox.__api;
 
 const row = (target, produced, scrap = 0, extra = {}) => ({ target, produced, scrap, downtime: 0, timeSlot: extra.timeSlot || '06:00–07:00', date: '2026-07-15', ...extra });
 const summary = (language, rows) => {
@@ -86,4 +86,26 @@ const summary = (language, rows) => {
   const rows = [row(100, 80), row(100, 130)];
   assert.match(summary('en', rows), /sum of hourly shortfalls is 20 pcs/);
   assert.match(summary('it', rows), /sottocoperture orarie è di 20 pezzi/);
+}
+
+
+{
+  sandbox.__setLang('en');
+  const restored = parseJsonBackup(JSON.stringify({
+    master: defaultMaster,
+    entries: [{ date: '2026-07-15', shift: 'Early shift', team: 'Team 1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: '850', produced: '900', scrap: '53', downtime: null, lossCategory: 'Quality', lossReason: 'High scrap' }],
+  }));
+  assert.equal(typeof restored.nextEntries[0].target, 'number');
+  assert.equal(restored.nextEntries[0].target, 850);
+  assert.equal(restored.nextEntries[0].scrap, 53);
+  assert.equal(restored.nextEntries[0].downtime, 0);
+  assert.equal(restored.nextEntries[0].shift, 'early_shift');
+  assert.equal(restored.nextEntries[0].team, 'team_1');
+}
+
+{
+  sandbox.__setLang('en');
+  assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-07-15', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 10, scrap: 11, downtime: 0 }] })), /scrap is greater/);
+  assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-02-31', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 100, scrap: 0, downtime: 0 }] })), /date is missing or invalid/);
+  assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: { bad: true } })), /JSON restore failed/);
 }

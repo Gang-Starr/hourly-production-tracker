@@ -135,7 +135,8 @@ dialog::backdrop{background:rgba(15,37,68,.5)}
 .management-card{display:grid;gap:1rem}
 .management-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-width:0}
 .management-header h2{margin:0}
-.management-copy{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;background:#fff;color:var(--text);border-color:var(--line)}
+.management-copy{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;background:#f3f7ff;color:var(--text);border-color:#cfdced}
+.management-copy:hover{background:#e8f1ff;border-color:#b9cbe3}
 .management-copy svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
 .management-copy:focus-visible{outline:3px solid rgba(31,111,235,.24);outline-offset:2px;border-color:var(--primary)}
 .management-copy.is-copied{background:#e9f7ef;border-color:#bfe5cf;color:var(--success)}

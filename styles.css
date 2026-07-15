@@ -222,3 +222,10 @@ table{min-width:900px}
 body:has(.info-dialog[open]){overflow:hidden}
 @media(max-width:760px){.info-dialog{width:calc(100vw - 1rem);max-width:calc(100vw - 1rem)}.info-modal-card{padding:1.25rem}.info-dialog-actions{flex-direction:column}.info-dialog-actions button{width:100%}}
 @media(max-width:420px){.info-dialog{width:calc(100vw - .5rem);max-width:calc(100vw - .5rem)}.info-modal-card{padding:1rem}.info-modal-card h2{font-size:1.25rem}}
+.primary:disabled,.danger:disabled{cursor:not-allowed;opacity:.55;filter:saturate(.65)}
+.danger-modal-card{display:grid;gap:1rem;width:min(540px,100%)}
+.danger-modal-card h2{margin:0;padding-right:3rem;color:var(--red)}
+.danger-warning{margin:0;color:var(--text);font-weight:700;line-height:1.5}
+.reset-confirm-label{display:grid;gap:.55rem;color:var(--muted);font-weight:700;line-height:1.4}
+.reset-dialog-actions{justify-content:flex-end;margin-top:.25rem}
+@media(max-width:640px){.reset-dialog-actions{align-items:stretch}.reset-dialog-actions button{width:100%}.danger-modal-card{padding:1.2rem}}

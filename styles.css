@@ -172,7 +172,7 @@ table{min-width:900px}
 
 /* Compact master data administration */
 .master-grid{display:block;min-width:0;max-width:100%}
-.master-core-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:1rem;min-width:0;max-width:100%}
+.master-core-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:1rem;min-width:0;max-width:100%;margin-top:18px}
 .master-reasons-section{margin-top:1.75rem;min-width:0;max-width:100%}
 .master-section-title{margin:0 0 .9rem;color:var(--text);font-size:1.25rem;line-height:1.2;overflow-wrap:normal;word-break:normal;hyphens:none}
 .master-reasons-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:.85rem;min-width:0;max-width:100%}

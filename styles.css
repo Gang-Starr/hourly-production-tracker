@@ -88,7 +88,7 @@ tbody tr:hover{background:#fbfdff}
 #overviewTable .row-actions{gap:.4rem}
 #overviewTable .row-actions button{padding:.38rem .58rem;line-height:1.18}
 .charts-grid,.charts-grid>div,.chart-panel{min-width:0;max-width:100%}
-.charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;width:100%}
+.charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;width:100%;margin-top:16px}
 .chart-panel{display:grid;gap:.55rem;align-content:start}
 .chart-panel h3{margin-bottom:.1rem;color:var(--text);line-height:1.25}
 canvas{display:block;width:100%;max-width:100%;min-height:300px;background:#fbfdff;border:1px solid var(--line);border-radius:14px}

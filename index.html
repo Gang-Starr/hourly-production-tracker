@@ -15,7 +15,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=33" />
 </head>
 <body>
   <header class="app-header">
@@ -112,6 +112,16 @@
     <section class="card"><h2 data-i18n="dataFunctions">Data functions</h2><div class="button-row data-functions-row"><button id="exportCsv" class="secondary" data-i18n="exportCsv" data-i18n-title="exportCsvHelp" data-i18n-aria="exportCsvHelp" title="Download production data as a CSV file. The file can be opened with applications such as Excel." aria-label="Download production data as a CSV file. The file can be opened with applications such as Excel.">Export production data</button><button id="exportJson" class="secondary" data-i18n="backupJson" data-i18n-title="backupJsonHelp" data-i18n-aria="backupJsonHelp" title="Create a complete backup of production entries, master data and application settings." aria-label="Create a complete backup of production entries, master data and application settings.">Create data backup</button><label class="file-button" data-i18n-title="restoreJsonHelp" data-i18n-aria="restoreJsonHelp" title="Select a previously created data backup and restore it in the application." aria-label="Select a previously created data backup and restore it in the application."><span data-i18n="restoreJson">Restore data backup</span><input id="importJson" type="file" accept="application/json"></label><button id="deleteAll" class="danger" data-i18n="deleteAll" data-i18n-title="deleteAllHelp" data-i18n-aria="deleteAllHelp" title="Delete all saved production entries. Master data remains unchanged." aria-label="Delete all saved production entries. Master data remains unchanged.">Delete all production entries</button><button id="fullReset" class="danger" type="button" data-i18n="fullReset" data-i18n-title="fullResetHelp" data-i18n-aria="fullResetHelp" title="Reset the app completely." aria-label="Reset the app completely.">Reset app completely</button></div></section>
   </main>
 
+  <dialog id="deleteAllDialog" class="danger-dialog" aria-modal="true" aria-labelledby="deleteAllDialogTitle">
+    <form id="deleteAllForm" class="modal-card danger-modal-card" method="dialog">
+      <h2 id="deleteAllDialogTitle" data-i18n="deleteAllDialogTitle">Delete production entries</h2>
+      <button id="closeDeleteAll" class="icon-button modal-close" data-i18n-aria="close" aria-label="Close" type="button">×</button>
+      <p class="danger-warning" data-i18n="deleteAllWarning">Do you really want to delete all production entries? This action cannot be undone. Projects, products, machines and loss reasons remain.</p>
+      <label class="reset-confirm-label" for="deleteAllConfirmInput"><span data-i18n="deleteAllConfirmText">Please enter DELETE to confirm deletion.</span><input id="deleteAllConfirmInput" autocomplete="off" inputmode="latin" spellcheck="false"></label>
+      <div class="button-row reset-dialog-actions"><button id="cancelDeleteAll" class="secondary" type="button" data-i18n="cancel">Cancel</button><button id="confirmDeleteAll" class="danger" type="submit" data-i18n="deleteAllConfirmButton" disabled>Delete permanently</button></div>
+    </form>
+  </dialog>
+
   <dialog id="resetDialog" class="danger-dialog" aria-modal="true" aria-labelledby="resetDialogTitle">
     <form id="resetForm" class="modal-card danger-modal-card" method="dialog">
       <h2 id="resetDialogTitle" data-i18n="dangerZone">Danger zone</h2>
@@ -131,6 +141,6 @@
     </div>
   </dialog>
   <footer class="app-footer" data-i18n="footer">Hourly Production Tracker · Internal Prototype · Developed by JSE</footer>
-  <script src="app.js?v=32"></script>
+  <script src="app.js?v=33"></script>
 </body>
 </html>

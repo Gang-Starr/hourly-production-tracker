@@ -51,6 +51,7 @@ button,.file-button{cursor:pointer;font-weight:700;transition:.15s}
 .status-red{background:var(--red)}
 .validation{font-weight:600;min-height:1.2rem}
 .validation:empty{display:none;min-height:0;margin:0}
+.form-actions{margin-top:16px}
 .validation.success{color:var(--success)}
 .validation.error{color:var(--red);font-weight:700}
 .hidden{display:none!important}

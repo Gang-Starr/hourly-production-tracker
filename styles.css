@@ -148,7 +148,8 @@ dialog::backdrop{background:rgba(15,37,68,.5)}
 .management-feedback{margin:.65rem 0 0;font-weight:800;color:var(--muted);min-height:1.1rem}
 .management-feedback:empty{display:none}
 .management-status{justify-self:end;min-width:82px}
-.app-footer{text-align:center;color:#4b5563;font-size:.9rem;line-height:1.45;padding:2.5rem clamp(1rem,4vw,2rem) 2.25rem;overflow-wrap:anywhere;word-break:normal}
+.app-footer{text-align:center;color:#4b5563;font-size:1rem;line-height:1.45;padding:3.25rem clamp(1rem,4vw,2rem) 2.25rem;overflow-wrap:anywhere;word-break:normal}
+.app-footer strong{font-weight:800;color:#374151}
 
 @media(min-width:901px){.app-header h1{white-space:nowrap}}
 @media(min-width:1280px){.header-subtitle{white-space:nowrap}}

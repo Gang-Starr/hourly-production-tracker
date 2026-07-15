@@ -101,14 +101,25 @@ const summary = (language, rows) => {
 
 {
   const rows = [
-    row(100, 100, 0, { id: 'c', timeSlot: '00:30–01:30' }),
-    row(100, 100, 0, { id: 'a', timeSlot: '22:15–23:15' }),
-    row(100, 100, 0, { id: 'b', timeSlot: '23:45–00:45' }),
+    row(100, 100, 0, { id: 'c', shift: 'night_shift', timeSlot: '00:30–01:30' }),
+    row(100, 100, 0, { id: 'a', shift: 'night_shift', timeSlot: '22:15–23:15' }),
+    row(100, 100, 0, { id: 'b', shift: 'night_shift', timeSlot: '23:45–00:45' }),
   ];
   assert.deepEqual(rows.sort(compareProductionEntries).map((entry) => entry.timeSlot), ['22:15–23:15', '23:45–00:45', '00:30–01:30']);
   assert.equal(productionTimeOrder({ timeSlot: 'bad value' }), Number.POSITIVE_INFINITY);
 }
 
+
+
+{
+  const rows = [
+    row(100, 100, 0, { id: 'other', shift: 'other', timeSlot: '06:00–07:00' }),
+    row(100, 100, 0, { id: 'late', shift: 'late_shift', timeSlot: '14:00–15:00' }),
+    row(100, 100, 0, { id: 'night', shift: 'night_shift', timeSlot: '22:00–23:00' }),
+    row(100, 100, 0, { id: 'early', shift: 'early_shift', timeSlot: '13:00–14:00' }),
+  ];
+  assert.deepEqual(rows.sort(compareProductionEntries).map((entry) => entry.shift), ['early_shift', 'late_shift', 'night_shift', 'other']);
+}
 
 {
   sandbox.__setLang('en');

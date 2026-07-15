@@ -12,8 +12,8 @@ const sandbox = {
   document: { documentElement: {}, addEventListener: () => {}, querySelectorAll: () => [], getElementById: () => ({}) },
   navigator: {},
 };
-vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster};this.__setLang=(value)=>{lang=value};`, sandbox);
-const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster } = sandbox.__api;
+vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder};this.__setLang=(value)=>{lang=value};`, sandbox);
+const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder } = sandbox.__api;
 
 const row = (target, produced, scrap = 0, extra = {}) => ({ target, produced, scrap, downtime: 0, timeSlot: extra.timeSlot || '06:00–07:00', date: '2026-07-15', ...extra });
 const summary = (language, rows) => {
@@ -86,6 +86,27 @@ const summary = (language, rows) => {
   const rows = [row(100, 80), row(100, 130)];
   assert.match(summary('en', rows), /sum of hourly shortfalls is 20 pcs/);
   assert.match(summary('it', rows), /sottocoperture orarie è di 20 pezzi/);
+}
+
+
+{
+  const rows = [
+    row(100, 100, 0, { id: 'c', shift: 'night_shift', timeSlot: '00:00–01:00' }),
+    row(100, 100, 0, { id: 'd', shift: 'night_shift', timeSlot: '01:00–02:00' }),
+    row(100, 100, 0, { id: 'a', shift: 'night_shift', timeSlot: '22:00–23:00' }),
+    row(100, 100, 0, { id: 'b', shift: 'night_shift', timeSlot: '23:00–00:00' }),
+  ];
+  assert.deepEqual(rows.sort(compareProductionEntries).map((entry) => entry.timeSlot), ['22:00–23:00', '23:00–00:00', '00:00–01:00', '01:00–02:00']);
+}
+
+{
+  const rows = [
+    row(100, 100, 0, { id: 'c', timeSlot: '00:30–01:30' }),
+    row(100, 100, 0, { id: 'a', timeSlot: '22:15–23:15' }),
+    row(100, 100, 0, { id: 'b', timeSlot: '23:45–00:45' }),
+  ];
+  assert.deepEqual(rows.sort(compareProductionEntries).map((entry) => entry.timeSlot), ['22:15–23:15', '23:45–00:45', '00:30–01:30']);
+  assert.equal(productionTimeOrder({ timeSlot: 'bad value' }), Number.POSITIVE_INFINITY);
 }
 
 

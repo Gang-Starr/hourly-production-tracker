@@ -12,8 +12,8 @@ const sandbox = {
   document: { documentElement: {}, addEventListener: () => {}, querySelectorAll: () => [], getElementById: () => ({}) },
   navigator: {},
 };
-vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder};this.__setLang=(value)=>{lang=value};`, sandbox);
-const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder } = sandbox.__api;
+vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder,timeSlotDurationHours,shiftBreakdown,shiftText};this.__setLang=(value)=>{lang=value};`, sandbox);
+const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder, timeSlotDurationHours, shiftBreakdown, shiftText } = sandbox.__api;
 
 const row = (target, produced, scrap = 0, extra = {}) => ({ target, produced, scrap, downtime: 0, timeSlot: extra.timeSlot || '06:00–07:00', date: '2026-07-15', ...extra });
 const summary = (language, rows) => {
@@ -79,7 +79,7 @@ const summary = (language, rows) => {
 
 {
   const appSource = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8');
-  assert.match(appSource, /copyText:text/);
+  assert.match(appSource, /copyText:\[shiftCopy,text\]/);
 }
 
 {
@@ -140,4 +140,29 @@ const summary = (language, rows) => {
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-07-15', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 10, scrap: 11, downtime: 0 }] })), /scrap is greater/);
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-02-31', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 100, scrap: 0, downtime: 0 }] })), /date is missing or invalid/);
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: { bad: true } })), /JSON restore failed/);
+}
+
+
+{
+  assert.equal(timeSlotDurationHours('06:00–07:00'), 1);
+  assert.equal(timeSlotDurationHours('22:00–06:00'), 8);
+  assert.equal(timeSlotDurationHours('06:30–08:00'), 1.5);
+  assert.equal(timeSlotDurationHours('not a slot'), null);
+}
+
+{
+  sandbox.__setLang('de');
+  const rows = [
+    row(50, 47, 0, { id: 'a', shift: 'early_shift', timeSlot: '06:00–07:00' }),
+    row(50, 47, 0, { id: 'b', shift: 'early_shift', timeSlot: '06:00–07:00', machine: 'parallel' }),
+    row(100, 100, 0, { id: 'c', shift: 'night_shift', timeSlot: '22:00–06:00' }),
+    row(10, 9, 0, { id: 'd', shift: 'other', timeSlot: 'bad value' }),
+  ];
+  const shifts = shiftBreakdown(rows);
+  assert.equal(shifts.find((s) => s.shift === 'early_shift').hours, 1);
+  assert.equal(shifts.find((s) => s.shift === 'early_shift').totals.target, 100);
+  assert.equal(shifts.find((s) => s.shift === 'night_shift').hours, 8);
+  assert.equal(shifts.find((s) => s.shift === 'other').hours, 0);
+  assert.match(shiftText(shifts[0]), /Frühschicht · 06:00–14:00 · 1,0 h erfasst/);
+  assert.match(shiftText(shifts[0], true), /Frühschicht \(06:00–14:00\): 1,0 h erfasst/);
 }

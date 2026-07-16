@@ -30,7 +30,10 @@ button,.file-button{cursor:pointer;font-weight:700;transition:.15s}
 .page-shell{width:100%;max-width:1440px;margin:0 auto;padding:1.5rem clamp(.85rem,3vw,2rem);display:grid;gap:1.2rem;box-sizing:border-box;min-width:0}
 .card{width:100%;min-width:0;max-width:100%;background:rgba(255,255,255,.96);border:1px solid #e6edf5;border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem}
 .hero-card,.section-heading{display:flex;min-width:0;max-width:100%;justify-content:space-between;gap:1rem;align-items:center}
-.hero-achievement{display:inline-flex;align-items:center;justify-content:flex-end;gap:.85rem;min-width:0;max-width:100%;text-align:right;color:var(--text-secondary);font-weight:800;line-height:1.2}
+.hero-card{padding:18px 20px;min-height:0}
+.hero-card h2{margin:0 0 8px}
+.hero-card p{margin:0}
+.hero-achievement{display:inline-flex;align-items:center;justify-content:flex-end;align-self:center;gap:.85rem;min-width:0;max-width:100%;text-align:right;color:var(--text-secondary);font-weight:800;line-height:1.2}
 .hero-achievement-label{min-width:0;overflow-wrap:anywhere}
 .grid,.two-columns,.form-card,.summary-card,.filters-card,details,summary{min-width:0;max-width:100%}
 .two-columns{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1.2rem;align-items:start;width:100%}

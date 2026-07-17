@@ -3,19 +3,22 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const source = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8').replace(/ init\(\);\s*$/, '');
+const elements = {};
+const element = (id) => elements[id] || (elements[id] = { value: '' });
 const sandbox = {
   console,
   structuredClone,
   crypto: { randomUUID: () => 'test-id' },
   localStorage: { getItem: () => null, setItem: () => {} },
   window: { addEventListener: () => {}, devicePixelRatio: 1 },
-  document: { documentElement: {}, addEventListener: () => {}, querySelectorAll: () => [], getElementById: () => ({}) },
+  document: { documentElement: {}, addEventListener: () => {}, querySelectorAll: () => [], getElementById: element },
   navigator: {},
 };
-vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder};this.__setLang=(value)=>{lang=value};`, sandbox);
-const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder } = sandbox.__api;
+vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder,buildHandoverCopyText,actionList};this.__setLang=(value)=>{lang=value};this.__setEntries=(value)=>{entries=value};`, sandbox);
+const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder, buildHandoverCopyText, actionList } = sandbox.__api;
 
 const row = (target, produced, scrap = 0, extra = {}) => ({ target, produced, scrap, downtime: 0, timeSlot: extra.timeSlot || '06:00–07:00', date: '2026-07-15', ...extra });
+const handoverRow = (target, produced, scrap = 0, extra = {}) => row(target, produced, scrap, { date: '2026-07-16', shift: 'early_shift', ...extra });
 const summary = (language, rows) => {
   sandbox.__setLang(language);
   return mText('main', managementMetrics(rows));
@@ -153,4 +156,68 @@ const summary = (language, rows) => {
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-07-15', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 10, scrap: 11, downtime: 0 }] })), /scrap is greater/);
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-02-31', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 100, scrap: 0, downtime: 0 }] })), /date is missing or invalid/);
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: { bad: true } })), /JSON restore failed/);
+}
+
+
+const configureHandover = (language, rows, manual = {}) => {
+  sandbox.__setLang(language);
+  sandbox.__setEntries(rows);
+  element('filterDate').value = '2026-07-16';
+  element('filterShift').value = 'early_shift';
+  element('filterTeam').value = '';
+  element('filterProject').value = '';
+  element('filterProduct').value = '';
+  element('filterMachine').value = '';
+  element('handoverOpenPoints').value = manual.openPoints || '';
+  element('handoverEquipmentStatus').value = manual.equipmentStatus || '';
+  element('handoverPriority').value = manual.priority || '';
+};
+
+{
+  const rows = [
+    handoverRow(150, 120, 5, { team: 'team_1', machine: 'Machine A', timeSlot: '06:00–07:00', lossCategory: 'Machine', lossReason: 'Machine breakdown', action: 'Schieber eingestellt' }),
+    handoverRow(150, 130, 10, { team: 'team_1', machine: 'Machine A', timeSlot: '07:00–08:00', lossCategory: 'Machine', lossReason: 'Machine breakdown', action: 'Schieber eingestellt' }),
+  ];
+  configureHandover('de', rows, { openPoints: 'Maschine A beobachten', equipmentStatus: 'Anlage läuft', priority: 'Team informieren' });
+  const text = buildHandoverCopyText();
+  assert.match(text, /^SCHICHTÜBERGABE\n\nDatum: 16\.07\.2026\nSchicht: Frühschicht\nTeam: Team 1\nAnlage: Maschine A/m);
+  assert.match(text, /PRODUKTIONSERGEBNIS\nZielmenge: 300 Stück\nProduzierte Menge: 250 Stück\nGutmenge: 235 Stück\nZielerreichung: 78,3 %/);
+  assert.match(text, /ABWEICHUNGEN\nZeitfenster unter Ziel: 2\nSchwächstes Zeitfenster: 06:00–07:00 Uhr\nHauptursache: Maschine \/ Maschinenausfall/);
+  assert.equal((text.match(/Schieber eingestellt/g) || []).length, 1);
+  assert.match(text, /OFFENE PUNKTE FÜR DIE NÄCHSTE SCHICHT\nMaschine A beobachten/);
+  assert.match(text, /AKTUELLER ANLAGENSTATUS\nAnlage läuft/);
+  assert.match(text, /PRIORITÄT FÜR DIE NÄCHSTE SCHICHT\nTeam informieren/);
+}
+
+{
+  const rows = [handoverRow(100, 100, 0, { team: 'team_1', machine: 'Machine A', action: 'n/a' })];
+  configureHandover('de', rows, { openPoints: '  ', equipmentStatus: 'keine', priority: '-' });
+  const text = buildHandoverCopyText();
+  assert.doesNotMatch(text, /BEREITS DURCHGEFÜHRTE MASSNAHMEN/);
+  assert.doesNotMatch(text, /OFFENE PUNKTE FÜR DIE NÄCHSTE SCHICHT|AKTUELLER ANLAGENSTATUS|PRIORITÄT FÜR DIE NÄCHSTE SCHICHT/);
+}
+
+{
+  const rows = [
+    handoverRow(100, 90, 0, { team: 'team_1', machine: 'Line 1' }),
+    handoverRow(100, 90, 0, { team: 'team_2', machine: 'Line 2' }),
+  ];
+  configureHandover('de', rows, { priority: 'Nur Priorität übernehmen' });
+  const text = buildHandoverCopyText();
+  assert.match(text, /Team: nicht eindeutig/);
+  assert.match(text, /Anlage: nicht eindeutig/);
+  assert.match(text, /PRIORITÄT FÜR DIE NÄCHSTE SCHICHT\nNur Priorität übernehmen/);
+}
+
+{
+  const rows = [handoverRow(100, 90, 0, { team: 'team_1', machine: 'Machine A', action: 'Reset done' })];
+  configureHandover('en', rows);
+  assert.match(buildHandoverCopyText(), /SHIFT HANDOVER[\s\S]*PRODUCTION RESULT[\s\S]*DEVIATIONS[\s\S]*ACTIONS ALREADY TAKEN/);
+  configureHandover('it', rows);
+  assert.match(buildHandoverCopyText(), /PASSAGGIO DI TURNO[\s\S]*RISULTATO DELLA PRODUZIONE[\s\S]*SCOSTAMENTI[\s\S]*MISURE GIÀ ESEGUITE/);
+}
+
+{
+  sandbox.__setLang('de');
+  assert.equal(JSON.stringify(actionList([{ action: 'n/a' }, { action: 'Schieber eingestellt' }, { action: 'schieber eingestellt' }, { action: 'none' }])), JSON.stringify(['Schieber eingestellt']));
 }

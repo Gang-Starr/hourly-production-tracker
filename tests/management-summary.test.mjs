@@ -191,9 +191,11 @@ const configureHandover = (language, rows, manual = {}) => {
   const content = buildHandoverCopyContent();
   assert.equal(content.text, text);
   assert.match(content.html, /font-family:Arial,sans-serif;font-size:11px;font-weight:400;line-height:1\.45;color:#000/);
-  assert.match(content.html, /font-size:16px;font-weight:700;margin:0 0 20px 0;">SCHICHTÜBERGABE/);
-  assert.match(content.html, /font-size:12px;font-weight:700;margin:22px 0 7px 0;">PRODUKTIONSERGEBNIS/);
-  assert.match(content.html, /<div style="font-size:11px;font-weight:400;line-height:1\.45;">Zielmenge: 300 Stück<\/div><div style="font-size:11px;font-weight:400;line-height:1\.45;">Produzierte Menge: 250 Stück<\/div><div style="font-size:11px;font-weight:400;line-height:1\.45;">Gutmenge: 235 Stück/);
+  assert.match(content.html, /^<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:11px;font-weight:400;line-height:1\.45;color:#000;">/);
+  assert.match(content.html, /<tr><td style="font-size:16px;font-weight:700;line-height:1\.45;padding:0 0 20px 0;">SCHICHTÜBERGABE<\/td><\/tr>/);
+  assert.match(content.html, /<tr><td style="font-size:12px;font-weight:700;line-height:1\.45;padding:22px 0 7px 0;">PRODUKTIONSERGEBNIS<\/td><\/tr>/);
+  assert.match(content.html, /<tr><td style="font-size:11px;font-weight:400;line-height:1\.45;padding:0;">Zielmenge: 300 Stück<\/td><\/tr><tr><td style="font-size:11px;font-weight:400;line-height:1\.45;padding:0;">Produzierte Menge: 250 Stück<\/td><\/tr><tr><td style="font-size:11px;font-weight:400;line-height:1\.45;padding:0;">Gutmenge: 235 Stück/);
+  assert.doesNotMatch(content.html, /<div/);
   assert.doesNotMatch(content.html, /<br>/);
 }
 

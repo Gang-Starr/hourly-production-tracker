@@ -14,8 +14,8 @@ const sandbox = {
   document: { documentElement: {}, addEventListener: () => {}, querySelectorAll: () => [], getElementById: element },
   navigator: {},
 };
-vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder,buildHandoverCopyText,buildHandoverCopyContent,actionList};this.__setLang=(value)=>{lang=value};this.__setEntries=(value)=>{entries=value};`, sandbox);
-const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder, buildHandoverCopyText, buildHandoverCopyContent, actionList } = sandbox.__api;
+vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder,buildHandoverCopyText,buildHandoverCopyContent,buildManagementCopyContent,actionList};this.__setLang=(value)=>{lang=value};this.__setEntries=(value)=>{entries=value};`, sandbox);
+const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder, buildHandoverCopyText, buildHandoverCopyContent, buildManagementCopyContent, actionList } = sandbox.__api;
 
 const row = (target, produced, scrap = 0, extra = {}) => ({ target, produced, scrap, downtime: 0, timeSlot: extra.timeSlot || '06:00–07:00', date: '2026-07-15', ...extra });
 const handoverRow = (target, produced, scrap = 0, extra = {}) => row(target, produced, scrap, { date: '2026-07-16', shift: 'early_shift', ...extra });
@@ -198,6 +198,44 @@ const configureHandover = (language, rows, manual = {}) => {
   assert.match(content.html, /<tr><td style="font-family:Arial,sans-serif;font-size:11px;font-weight:400;line-height:1\.45;">Zielmenge: 300 Stück<\/td><\/tr><tr><td style="font-family:Arial,sans-serif;font-size:11px;font-weight:400;line-height:1\.45;">Produzierte Menge: 250 Stück<\/td><\/tr><tr><td style="font-family:Arial,sans-serif;font-size:11px;font-weight:400;line-height:1\.45;">Gutmenge: 235 Stück/);
   assert.doesNotMatch(content.html, /<div/);
   assert.doesNotMatch(content.html, /<br>/);
+}
+
+{
+  const rows = [
+    handoverRow(50, 50, 0, { team: 'team_1', machine: 'Machine A', timeSlot: '06:00–07:00' }),
+    handoverRow(50, 20, 0, { team: 'team_1', machine: 'Machine A', timeSlot: '09:00–10:00', lossCategory: 'Machine', lossReason: 'Machine breakdown' }),
+    handoverRow(50, 55, 0, { team: 'team_1', machine: 'Machine A', timeSlot: '13:00–14:00' }),
+  ];
+  configureHandover('de', rows);
+  const content = buildManagementCopyContent();
+  assert.match(content.text, /^MANAGEMENT-ZUSAMMENFASSUNG\n\nDatum: 16\.07\.2026\nSchicht: Frühschicht\nTeam: Team 1\nAnlage: Maschine A\n\nPRODUKTIONSERGEBNIS\nZielmenge: 150 Stück\nGutmenge: 125 Stück\nZielerreichung: 83,3 %\nStündliche Unterdeckung: 30 Stück\nNettorückstand: 25 Stück\nZeitfenster unter Ziel: 1 von 3\n\nLEISTUNGSVERLAUF/m);
+  assert.match(content.text, /Stärkstes Zeitfenster: 13:00–14:00 Uhr mit 110 % Zielerreichung/);
+  assert.match(content.text, /Schwächstes Zeitfenster: 09:00–10:00 Uhr mit 40 % Zielerreichung/);
+  assert.match(content.text, /VERLUSTANALYSE\nGrößter Verlusttreiber: Maschine\nVerlustmenge: 30 Stück/);
+  assert.match(content.html, /<tr><td style="font-family:Arial,sans-serif;font-size:16px;font-weight:700;mso-bidi-font-weight:bold;line-height:1\.3;padding:0 0 20px 0;">MANAGEMENT-ZUSAMMENFASSUNG<\/td><\/tr>/);
+  assert.match(content.html, /<tr><td style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;mso-bidi-font-weight:bold;line-height:1\.45;padding:22px 0 7px 0;">PRODUKTIONSERGEBNIS<\/td><\/tr>/);
+  assert.match(content.html, /<tr><td style="font-family:Arial,sans-serif;font-size:11px;font-weight:400;line-height:1\.45;">Datum: 16\.07\.2026<\/td><\/tr>/);
+  assert.doesNotMatch(content.html, /<div|<br|margin/i);
+}
+
+{
+  const rows = [
+    handoverRow(100, 90, 0, { team: 'team_1', machine: 'Line 1' }),
+    handoverRow(100, 90, 0, { team: 'team_2', machine: 'Line 2' }),
+  ];
+  configureHandover('de', rows);
+  const text = buildManagementCopyContent().text;
+  assert.match(text, /Team: nicht eindeutig/);
+  assert.match(text, /Anlage: nicht eindeutig/);
+  assert.doesNotMatch(text, /VERLUSTANALYSE/);
+}
+
+{
+  const rows = [handoverRow(100, 90, 0, { team: 'team_1', machine: 'Machine A', lossCategory: 'Machine', lossReason: 'Machine breakdown' })];
+  configureHandover('en', rows);
+  assert.match(buildManagementCopyContent().text, /MANAGEMENT SUMMARY[\s\S]*PRODUCTION RESULT[\s\S]*PERFORMANCE TREND[\s\S]*LOSS ANALYSIS/);
+  configureHandover('it', rows);
+  assert.match(buildManagementCopyContent().text, /RIEPILOGO DIREZIONALE[\s\S]*RISULTATO DELLA PRODUZIONE[\s\S]*ANDAMENTO DELLE PRESTAZIONI[\s\S]*ANALISI DELLE PERDITE/);
 }
 
 

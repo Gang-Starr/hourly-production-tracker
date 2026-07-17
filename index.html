@@ -15,7 +15,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=34" />
+  <link rel="stylesheet" href="styles.css?v=35" />
 </head>
 <body>
   <header class="app-header">
@@ -123,6 +123,10 @@
       </div>
       <div class="button-row handover-actions">
         <button id="saveHandover" class="primary" type="button" data-i18n="saveHandover">Save shift handover</button>
+        <button id="copyHandover" class="secondary management-copy handover-copy" type="button" data-i18n-aria="copyHandover" aria-label="Copy shift handover">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 8h10v12H8z"/><path d="M6 16H4V4h12v2"/></svg>
+          <span data-i18n="copyHandover">Copy shift handover</span>
+        </button>
         <span id="handoverSaveFeedback" class="management-feedback" aria-live="polite"></span>
       </div>
     </section>
@@ -180,6 +184,6 @@
     </div>
   </dialog>
   <footer class="app-footer">Hourly Production Tracker · Internal Prototype · <strong>Developed by JSE</strong></footer>
-  <script src="app.js?v=34"></script>
+  <script src="app.js?v=35"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=33" />
+  <link rel="stylesheet" href="styles.css?v=34" />
 </head>
 <body>
   <header class="app-header">
@@ -104,6 +104,24 @@
         <div id="managementStatus" class="status-pill management-status hidden"></div>
       </div>
     </section>
+    <section class="card management-card handover-card" id="shiftHandoverCard">
+      <div class="management-header handover-header">
+        <h2 data-i18n="shiftHandover">Shift handover</h2>
+        <span class="handover-badge" data-i18n="operativeHandover">Operative handover</span>
+      </div>
+      <div class="management-body handover-body">
+        <div class="management-text">
+          <p id="handoverScope" class="management-scope"></p>
+          <p id="handoverSummaryText" class="management-summary-text"></p>
+        </div>
+        <div id="handoverStatus" class="status-pill management-status hidden"></div>
+      </div>
+      <div class="handover-fields form-grid">
+        <label><span data-i18n="handoverOpenPoints">Open points for the next shift</span><textarea id="handoverOpenPoints" rows="3"></textarea></label>
+        <label><span data-i18n="handoverEquipmentStatus">Current equipment status</span><textarea id="handoverEquipmentStatus" rows="3"></textarea></label>
+        <label class="wide"><span data-i18n="handoverPriority">Priority for the next shift</span><input id="handoverPriority" type="text"></label>
+      </div>
+    </section>
 
     <section class="card"><details open><summary><h2 data-i18n="charts">Charts</h2></summary><div class="charts-grid"><div class="chart-panel"><h3 data-i18n="chartHourly">Hourly target vs. good quantity</h3><canvas id="hourlyChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartCumulative">Cumulative target vs. cumulative good quantity</h3><canvas id="cumulativeChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartPareto">Pareto lost quantity by loss category</h3><canvas id="paretoChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartDowntime">Downtime by loss category</h3><canvas id="downtimeChart" height="180"></canvas></div></div></details></section>
 
@@ -158,6 +176,6 @@
     </div>
   </dialog>
   <footer class="app-footer">Hourly Production Tracker · Internal Prototype · <strong>Developed by JSE</strong></footer>
-  <script src="app.js?v=33"></script>
+  <script src="app.js?v=34"></script>
 </body>
 </html>

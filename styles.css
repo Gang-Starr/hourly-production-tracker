@@ -280,3 +280,6 @@ body:has(.info-dialog[open]){overflow:hidden}
 .handover-fields{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line)}
 .handover-fields textarea{resize:vertical;min-height:5.25rem}
 .handover-fields textarea:disabled,.handover-fields input:disabled{background:#f4f7fb;color:var(--muted);cursor:not-allowed}
+.handover-actions{align-items:center;justify-content:flex-start;margin-top:16px}
+.handover-actions .primary{white-space:normal}
+@media(max-width:640px){.handover-actions{align-items:stretch;flex-direction:column}.handover-actions .primary{width:100%}}

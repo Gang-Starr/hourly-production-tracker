@@ -121,6 +121,10 @@
         <label><span data-i18n="handoverEquipmentStatus">Current equipment status</span><textarea id="handoverEquipmentStatus" rows="3"></textarea></label>
         <label class="wide"><span data-i18n="handoverPriority">Priority for the next shift</span><input id="handoverPriority" type="text"></label>
       </div>
+      <div class="button-row handover-actions">
+        <button id="saveHandover" class="primary" type="button" data-i18n="saveHandover">Save shift handover</button>
+        <span id="handoverSaveFeedback" class="management-feedback" aria-live="polite"></span>
+      </div>
     </section>
 
     <section class="card"><details open><summary><h2 data-i18n="charts">Charts</h2></summary><div class="charts-grid"><div class="chart-panel"><h3 data-i18n="chartHourly">Hourly target vs. good quantity</h3><canvas id="hourlyChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartCumulative">Cumulative target vs. cumulative good quantity</h3><canvas id="cumulativeChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartPareto">Pareto lost quantity by loss category</h3><canvas id="paretoChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartDowntime">Downtime by loss category</h3><canvas id="downtimeChart" height="180"></canvas></div></div></details></section>

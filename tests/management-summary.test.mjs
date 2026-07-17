@@ -14,8 +14,8 @@ const sandbox = {
   document: { documentElement: {}, addEventListener: () => {}, querySelectorAll: () => [], getElementById: element },
   navigator: {},
 };
-vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder,buildHandoverCopyText,actionList};this.__setLang=(value)=>{lang=value};this.__setEntries=(value)=>{entries=value};`, sandbox);
-const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder, buildHandoverCopyText, actionList } = sandbox.__api;
+vm.runInNewContext(`${source}\nthis.__api={calc,managementMetrics,mText,parseJsonBackup,defaultMaster,compareProductionEntries,productionTimeOrder,buildHandoverCopyText,buildHandoverCopyContent,actionList};this.__setLang=(value)=>{lang=value};this.__setEntries=(value)=>{entries=value};`, sandbox);
+const { calc, managementMetrics, mText, parseJsonBackup, defaultMaster, compareProductionEntries, productionTimeOrder, buildHandoverCopyText, buildHandoverCopyContent, actionList } = sandbox.__api;
 
 const row = (target, produced, scrap = 0, extra = {}) => ({ target, produced, scrap, downtime: 0, timeSlot: extra.timeSlot || '06:00–07:00', date: '2026-07-15', ...extra });
 const handoverRow = (target, produced, scrap = 0, extra = {}) => row(target, produced, scrap, { date: '2026-07-16', shift: 'early_shift', ...extra });
@@ -187,7 +187,15 @@ const configureHandover = (language, rows, manual = {}) => {
   assert.match(text, /OFFENE PUNKTE FÜR DIE NÄCHSTE SCHICHT\nMaschine A beobachten/);
   assert.match(text, /AKTUELLER ANLAGENSTATUS\nAnlage läuft/);
   assert.match(text, /PRIORITÄT FÜR DIE NÄCHSTE SCHICHT\nTeam informieren/);
+
+  const content = buildHandoverCopyContent();
+  assert.equal(content.text, text);
+  assert.match(content.html, /text\/html|font-family: Arial, sans-serif/);
+  assert.match(content.html, /font-size: 16px; font-weight: 700; margin-bottom: 18px;">SCHICHTÜBERGABE/);
+  assert.match(content.html, /font-size: 12px; font-weight: 700; margin-top: 18px; margin-bottom: 4px;">PRODUKTIONSERGEBNIS/);
+  assert.match(content.html, /font-size: 11px; font-weight: 400;">Zielmenge: 300 Stück<br>Produzierte Menge: 250 Stück<br>Gutmenge: 235 Stück/);
 }
+
 
 {
   const rows = [handoverRow(100, 100, 0, { team: 'team_1', machine: 'Machine A', action: 'n/a' })];

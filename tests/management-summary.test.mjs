@@ -137,6 +137,19 @@ const summary = (language, rows) => {
 
 {
   sandbox.__setLang('en');
+  const restored = parseJsonBackup(JSON.stringify({
+    master: defaultMaster,
+    entries: [
+      { date: '2026-07-14', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 100, scrap: 0, downtime: 0 },
+      { date: '2026-07-16', shift: 'early_shift', team: 'team_1', timeSlot: '07:00–08:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 100, scrap: 0, downtime: 0 },
+      { date: '2026-07-17', shift: 'early_shift', team: 'team_1', timeSlot: '08:00–09:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 100, scrap: 0, downtime: 0 },
+    ],
+  }));
+  assert.equal(restored.nextEntries.map((entry) => entry.date).join(','), '2026-07-14,2026-07-16,2026-07-17');
+}
+
+{
+  sandbox.__setLang('en');
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-07-15', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 10, scrap: 11, downtime: 0 }] })), /scrap is greater/);
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: [{ date: '2026-02-31', shift: 'early_shift', team: 'team_1', timeSlot: '06:00–07:00', project: 'Project A', product: 'Product 100', machine: 'Line 1', target: 100, produced: 100, scrap: 0, downtime: 0 }] })), /date is missing or invalid/);
   assert.throws(() => parseJsonBackup(JSON.stringify({ master: defaultMaster, entries: { bad: true } })), /JSON restore failed/);

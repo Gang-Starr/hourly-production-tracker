@@ -87,9 +87,8 @@
     </section>
 
 
-    <section class="card management-card" id="managementSummaryCard">
-      <div class="management-header">
-        <h2 data-i18n="managementSummary">Management summary</h2>
+    <section class="card management-card" id="managementSummaryCard"><details id="managementSummaryDetails" open><summary id="managementSummarySummary" aria-expanded="true"><h2 data-i18n="managementSummary">Management summary</h2></summary>
+      <div class="management-actions">
         <button id="copyManagementSummary" class="secondary management-copy" type="button" data-i18n-aria="copySummary" aria-label="Copy summary">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 8h10v12H8z"/><path d="M6 16H4V4h12v2"/></svg>
           <span data-i18n="copySummary">Copy summary</span>
@@ -103,12 +102,8 @@
         </div>
         <div id="managementStatus" class="status-pill management-status hidden"></div>
       </div>
-    </section>
-    <section class="card management-card handover-card" id="shiftHandoverCard">
-      <div class="management-header handover-header">
-        <h2 data-i18n="shiftHandover">Shift handover</h2>
-        <span class="handover-badge" data-i18n="operativeHandover">Operative handover</span>
-      </div>
+    </details></section>
+    <section class="card management-card handover-card" id="shiftHandoverCard"><details id="shiftHandoverDetails" open><summary id="shiftHandoverSummary" class="handover-summary" aria-expanded="true"><h2 data-i18n="shiftHandover">Shift handover</h2><span class="handover-badge" data-i18n="operativeHandover">Operative handover</span></summary>
       <div class="management-body handover-body">
         <div class="management-text">
           <p id="handoverScope" class="management-scope"></p>
@@ -129,7 +124,7 @@
         </button>
         <span id="handoverSaveFeedback" class="management-feedback" aria-live="polite"></span>
       </div>
-    </section>
+    </details></section>
 
     <section class="card"><details open><summary><h2 data-i18n="charts">Charts</h2></summary><div class="charts-grid"><div class="chart-panel"><h3 data-i18n="chartHourly">Hourly target vs. good quantity</h3><canvas id="hourlyChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartCumulative">Cumulative target vs. cumulative good quantity</h3><canvas id="cumulativeChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartPareto">Pareto lost quantity by loss category</h3><canvas id="paretoChart" height="180"></canvas></div><div class="chart-panel"><h3 data-i18n="chartDowntime">Downtime by loss category</h3><canvas id="downtimeChart" height="180"></canvas></div></div></details></section>
 

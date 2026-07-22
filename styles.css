@@ -139,6 +139,9 @@ dialog::backdrop{background:rgba(15,37,68,.5)}
 .management-card{display:grid;gap:1rem}
 .management-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-width:0}
 .management-header h2{margin:0}
+.management-actions{display:flex;justify-content:flex-end;margin-top:1rem}
+.management-card summary{min-width:0;overflow-wrap:anywhere}
+.management-card summary h2{min-width:0;overflow-wrap:anywhere}
 .management-copy{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;background:#f3f7ff;color:var(--text);border-color:#cfdced}
 .management-copy:hover{background:#e8f1ff;border-color:#b9cbe3}
 .management-copy svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
@@ -172,7 +175,7 @@ dialog::backdrop{background:rgba(15,37,68,.5)}
 
 @media(max-width:640px){.hero-card,.section-heading,.management-header{align-items:stretch;flex-direction:column}
 .hero-achievement{align-items:flex-start;justify-content:flex-start;flex-direction:column;gap:.45rem;text-align:left}
-.management-body{grid-template-columns:1fr}.management-status{justify-self:start}.management-copy{width:100%}
+.management-body{grid-template-columns:1fr}.management-status{justify-self:start}.management-actions{justify-content:stretch}.management-copy{width:100%}
 .button-row{width:100%}
 .button-row>*{flex:1 1 100%}
 .form-grid{grid-template-columns:1fr}
@@ -276,6 +279,7 @@ body:has(.info-dialog[open]){overflow:hidden}
 @media(max-width:640px){.data-function-group-actions,.data-danger-row{flex-direction:column}.data-function-group-actions>*{flex:1 1 100%;width:100%}}
 .handover-card{border-left:5px solid #0f766e;background:linear-gradient(180deg,#ffffff 0%,#f7fffd 100%)}
 .handover-header{align-items:center}
+.handover-summary h2{margin-right:.75rem}
 .handover-badge{display:inline-flex;align-items:center;border:1px solid #99f6e4;border-radius:999px;background:#ecfdf5;color:#0f766e;font-size:.8rem;font-weight:900;letter-spacing:.02em;padding:.35rem .65rem;text-transform:uppercase}
 .handover-fields{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line)}
 .handover-fields textarea{resize:vertical;min-height:5.25rem}

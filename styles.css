@@ -131,6 +131,8 @@ canvas{display:block;width:100%;max-width:100%;min-height:300px;background:#fbfd
 .file-button input{position:absolute;inset:0;opacity:0}
 summary{cursor:pointer}
 summary h2{display:inline}
+.overview-content{margin-top:1rem}
+.overview-actions{justify-content:flex-end;margin-bottom:.85rem}
 dialog{max-width:calc(100vw - 2rem);border:0;background:transparent}
 dialog::backdrop{background:rgba(15,37,68,.5)}
 .modal-card{width:min(560px,100%);max-width:100%;background:#fff;border-radius:20px;padding:1.5rem;box-shadow:var(--shadow);position:relative}

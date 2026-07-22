@@ -81,9 +81,13 @@
     </section>
 
     <section class="card filters-card">
-      <div class="section-heading"><h2 data-i18n="overview">Hourly overview</h2><button id="clearFilters" class="secondary" data-i18n="clearFilters">Clear filters</button></div>
-      <div class="form-grid filters"><label><span data-i18n="date">Date</span><input id="filterDate" type="date"></label><label><span data-i18n="shift">Shift</span><select id="filterShift"></select></label><label><span data-i18n="team">Team</span><select id="filterTeam"></select></label><label><span data-i18n="project">Project</span><select id="filterProject"></select></label><label><span data-i18n="product">Product</span><select id="filterProduct"></select></label><label><span data-i18n="machine">Machine</span><select id="filterMachine"></select></label></div>
-      <div class="table-wrap"><table id="overviewTable"><thead></thead><tbody></tbody></table></div>
+      <details id="hourlyOverviewDetails" open><summary id="hourlyOverviewSummary" aria-expanded="true"><h2 data-i18n="overview">Hourly overview</h2></summary>
+        <div class="overview-content">
+          <div class="section-heading overview-actions"><button id="clearFilters" class="secondary" data-i18n="clearFilters">Clear filters</button></div>
+          <div class="form-grid filters"><label><span data-i18n="date">Date</span><input id="filterDate" type="date"></label><label><span data-i18n="shift">Shift</span><select id="filterShift"></select></label><label><span data-i18n="team">Team</span><select id="filterTeam"></select></label><label><span data-i18n="project">Project</span><select id="filterProject"></select></label><label><span data-i18n="product">Product</span><select id="filterProduct"></select></label><label><span data-i18n="machine">Machine</span><select id="filterMachine"></select></label></div>
+          <div class="table-wrap"><table id="overviewTable"><thead></thead><tbody></tbody></table></div>
+        </div>
+      </details>
     </section>
 
 

@@ -263,7 +263,7 @@ body:has(.info-dialog[open]){overflow:hidden}
 /* Subtle grouping for standard data functions */
 .data-functions-card{display:grid;gap:1rem}
 .data-functions-card>h2{margin-bottom:0}
-.data-functions-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;min-width:0;max-width:100%}
+.data-functions-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;min-width:0;max-width:100%;margin-top:16px}
 .data-function-group{display:grid;gap:.65rem;min-width:0;padding:.85rem;border:1px solid #dfe8f2;border-radius:12px}
 .data-function-group h3{margin:0;color:var(--text-secondary);font-size:.82rem;font-weight:800;letter-spacing:.06em;line-height:1.25;text-transform:uppercase}
 .production-data-group{background:#f4f8ff}
